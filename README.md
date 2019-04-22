@@ -12,4 +12,4 @@ GUI application for downloading mp3 from tuneslib
 - run "npm start"
 
 # Packaging
-- run "npm run deploy tuneslib-downloader"
+- run "npm run deploy"
