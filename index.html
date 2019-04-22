@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Tunes Downloader</title>
+    <link href="style.css" rel="stylesheet" type="text/css" />
+    <link href="w3.css" rel="stylesheet" type="text/css" />
+    <link href="w3-theme-blue-grey.css" rel="stylesheet" type="text/css" />
+    <link href="fontawesome/css/fontawesome.min.css" rel="stylesheet" type="text/css" />
+</head>
+
+<body class="w3-theme-l4">
+
+    <div style="min-width:400px">
+        <div class="w3-bar w3-large w3-theme-d4">
+            <span class="w3-bar-item">TUNES DOWNLOADER</span>
+        </div>
+
+        <div class="w3-container w3-content">
+            <p class="w3-opacity"><b>Setup</b></p>
+            <div class="w3-panel w3-white w3-card w3-display-container">
+                <p></p>
+                <div class="w3-container" style="margin-bottom: 30px;">
+
+                    <button id="dirctory-btn" class="w3-button w3-block w3-teal">Choose Download Directory</button>
+                    <input id="directory-browser" type="file" webkitdirectory style="display: none" />
+                    <div id='choosen-dir' class="w3-panel w3-light-blue" style="display:none"></div>
+                    <br />
+                    <label>Start Link</label>
+                    <input type='text' id='url' class="w3-input w3-block" placeholder="Enter start url. eg: https://example.com/hot-hits" />
+                    <p></p>
+
+                    <p style="margin-bottom: 20px;">
+                        <button onclick="doStart()" id='start-btn' class="w3-button w3-green"
+                            style="float:right;">Start</button>
+                    </p>
+
+                </div>
+            </div>
+            <p></p>
+
+        </div>
+
+        <div class="w3-container w3-content">
+            <p class="w3-opacity"><b>Information</b></p>
+            <div class="w3-panel w3-white w3-card w3-display-container">
+                    <div id='message' class="w3-panel w3-light-blue" >
+                        <p>Waiting to start downloading.</p>
+                    </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="inputerror" class="w3-modal">
+            <div class="w3-modal-content w3-card-4 w3-animate-zoom">
+              <header class="w3-container w3-black"> 
+                <span onclick="document.getElementById('inputerror').style.display='none'" 
+                class="w3-button w3-display-topright">&times;</span>
+                <h2>Input invalid</h2>
+              </header>
+              <div class="w3-container">
+                <p>You need to select a download folder and provide a start link</p>          
+              </div>
+            </div>
+          </div>
+
+    <script src="download.js"></script>
+    <script>
+        var downloadDir = '';
+        var running = false;
+
+        function validateInput(){
+           let baseDomain = document.getElementById('url').value;
+           domain = baseDomain.replace('http://','').replace('https://','').split(/[/?#]/)[0];
+           if(baseDomain && downloadDir && domain){
+               return true;
+           }else{
+            document.getElementById('inputerror').style.display = 'block';
+             return false;
+           }
+        }
+
+        function doStart() {
+
+            if (running) {
+                running = false;
+                showInformation('Stop');
+                stopDownload();
+            } else {
+               
+                if(validateInput()){
+                    running = true;
+                   showInformation('Start');
+                   download(document.getElementById('url').value,downloadDir);
+                }
+                
+            }
+            document.getElementById('start-btn').innerText = (running) ? 'Stop' : 'Start';
+        }
+
+        document.getElementById('dirctory-btn').addEventListener('click', _ => {
+            document.getElementById('directory-browser').click();
+        });
+
+        document.getElementById('directory-browser').addEventListener('change', _ => {
+            downloadDir = document.getElementById('directory-browser').files[0].path;
+
+            if(downloadDir){
+                document.getElementById('choosen-dir').innerHTML = '<p>' + downloadDir + '</p>';
+                document.getElementById('choosen-dir').style.display = 'block';
+            }else{
+                document.getElementById('choosen-dir').innerHTML = '';
+                document.getElementById('choosen-dir').style.display = 'none';
+            }
+           
+        });
+
+    </script>
+</body>
+
+</html>

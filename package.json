@@ -1,0 +1,21 @@
+{
+  "name": "tunes-downloader",
+  "productName": "tunes-downloader",
+  "version": "1.0.0",
+  "description": "",
+  "main": "main.js",
+  "dependencies": {
+    "cheerio": "^1.0.0-rc.3",
+    "electron": "^4.1.4"
+  },
+  "devDependencies": {
+    "electron-packager": "^13.1.1"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "electron .",
+    "deploy": "electron-packager ."
+  },
+  "author": "",
+  "license": "ISC"
+}
