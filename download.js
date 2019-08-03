@@ -14,6 +14,8 @@ var startIndex = 0;
  * @param {function} callback 
  */
 let processLink = function (link, callback) {
+
+
     let req = http.request(link,
         (res) => {
             let output = '';
@@ -61,11 +63,9 @@ let processLink = function (link, callback) {
                     }
                 });
             } else {
-                res.on('end', () => {
-                    if (typeof callback == 'function') {
+                if (typeof callback == 'function') {
                         callback();
-                    }
-                });
+                }
             }
         }
     );
@@ -81,7 +81,7 @@ function doNextLink() {
     startIndex += 1;
     if (links[startIndex] != undefined) {
         
-        let sleepTime = getRandomInt(10000);
+        let sleepTime = getRandomInt(5000);
         showInformation('Pausing for: ' + parseInt((sleepTime / 1000), 10)+ ' seconds');
         setTimeout(()=>{
             showInformation('Starting next link: ' + links[startIndex]);
