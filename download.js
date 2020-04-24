@@ -53,7 +53,11 @@ let processLink = function (link, callback) {
                     $('a').toArray().reverse().forEach(function (link) {
                         var url = $(link).attr('href');
                         if (url && url.indexOf(domain) != -1 && links.indexOf(url) == -1 && links.length > 0) {
-                            links.push(url);
+                            if(url.indexOf('download') > 0){
+                                processLink(url, callback);
+                            }else{
+                                links.push(url);
+                            }
                         }
                     });
                     showInformation('Parsing web page completed: ' + link);
@@ -81,12 +85,14 @@ function doNextLink() {
     startIndex += 1;
     if (links[startIndex] != undefined) {
         
-        let sleepTime = getRandomInt(5000);
+        let sleepTime = getRandomInt(3000);
         showInformation('Pausing for: ' + parseInt((sleepTime / 1000), 10)+ ' seconds');
         setTimeout(()=>{
             showInformation('Starting next link: ' + links[startIndex]);
             processLink(links[startIndex], doNextLink);
         },sleepTime);
+
+        links.splice(startIndex, 1);
         
     } else {
         showInformation('Download completed');
