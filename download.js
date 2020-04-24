@@ -85,7 +85,7 @@ function doNextLink() {
     startIndex += 1;
     if (links[startIndex] != undefined) {
         
-        let sleepTime = getRandomInt(3000);
+        let sleepTime = getRandomInt(5000);
         showInformation('Pausing for: ' + parseInt((sleepTime / 1000), 10)+ ' seconds');
         setTimeout(()=>{
             showInformation('Starting next link: ' + links[startIndex]);
